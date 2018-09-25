@@ -16,10 +16,15 @@ int main()
 int n ,r,i,p;
 printf("Enter value of n and r : ");
 scanf("%d %d",&n,&r);
-
+if( n>= r)
+{
   p= fact( n) / fact( n- r);
 
 printf("Permutation P(%d , %d) = %d",n,r,p);
+}
+     else {
+		printf("Wrong Input ! Enter n>=1 .");
+	}
 
 return 0;
 
