@@ -1,38 +1,52 @@
 /*
  * C++ Program to Implement Modular Exponentiation Algorithm
  */
+
 #include <iostream>
-#define ll long long
 using namespace std;
 
-/*
- * Function to calculate modulus of x raised to the power y
- */
-ll modular_pow(ll base, ll exponent, int modulus)
-{
-    ll result = 1;
-    while (exponent > 0)
+int mod (int x, int y, int a)
     {
-        if (exponent % 2 == 1)
-            result = (result * base) % modulus;
-        exponent = exponent >> 1;
-        base = (base * base) % modulus;
+    if (x == 0)
+        return 0;
+    if (y == 0)
+        return 1;
+
+    // If y is even
+    long temp;
+    if (y % 2 == 0) {
+        temp = mod(x, y / 2, a);
+        temp = (temp * temp) % a;
     }
-    return result;
+
+    // If y is odd
+    else {
+        temp = x % a;
+        temp = (temp * mod(x, y - 1, a) % a) % a;
+    }
+
+    return (int)((temp + a) % a);
+
 }
+
 /*
  * Main
  */
+
 int main()
 {
-    ll x, y;
-    int mod;
-    cout<<"Enter Base Value: ";
+  int x,y,a;
+  cout<<"x^y (mod a)"<<endl;
+
+   cout<<"Enter Base Value: ";
     cin>>x;
     cout<<"Enter Exponent: ";
     cin>>y;
     cout<<"Enter Modular Value: ";
-    cin>>mod;
-    cout<<modular_pow(x, y , mod);
-    return 0;
+    cin>>a;
+    long temp;
+    temp= mod(x,y,a);
+
+    cout<<x <<" ^ "<<y <<" (mod "<<a<<")"<<" = "<<temp;
 }
+
