@@ -1,58 +1,99 @@
 //Program to represent graph using adjacency matrix
-#include<iostream>
-#include<iomanip>
- 
-using namespace std;
- 
-// A function to print the adjacency matrix.
-void PrintMat(int mat[][20], int n)
-{
- int i, j;
- 
- cout<<"\n\n"<<setw(4)<<"";
- for(i = 0; i < n; i++)
-  cout<<setw(3)<<"("<<i+1<<")";
- cout<<"\n\n";
- 
- // Print 1 if the corresponding vertexes are connected otherwise 0.
- for(i = 0; i < n; i++)
- {
-  cout<<setw(3)<<"("<<i+1<<")";
-  for(j = 0; j < n; j++)
-  {
-   cout<<setw(4)<<mat[i][j];
-  }
-  cout<<"\n\n";
- }
-}
- 
+#include<stdio.h>
 int main()
 {
- int i, j, v;
- 
- cout<<"Enter the number of vertexes: ";
- cin>>v;
- 
- int  mat[20][20];
- 
- cout<<"\n";
- // Take input of the adjacency of each pair of vertexes.
- for(i = 0; i < v; i++)
- {
-  for(j = i; j < v; j++)
-  {
-   if(i != j)
-   {
-    cout<<"Enter 1 if the vertex "<<i+1<<" is adjacent to "<<j+1<<", otherwise 0: ";
-    cin>>mat[i][j];
- 
-    mat[j][i] = mat[i][j];
-   }
-   else
-    mat[i][j] = 0;
-  }
- }
- 
- PrintMat(mat, v);
+int option;
+do
+{
+printf("\n A Program ro represent a Graph by using an \n");
+printf("\n Adjacency Matrix Method \n");
+printf("\n 1. Directed Graph \n");
+printf("\n 2. Undireceted Graph \n");
+printf("\n 3. Exit \n");
+printf("\n\n Choose any option:  \n");
+scanf("%d",&option);
+switch(option)
+    {
+        case 1: dir_graph();
+                break;
+        case 2: undir_graph();
+                break;
+        case 3: exit(0);
+
+    }
 }
+ while(1);
+}
+
+int dir_graph()
+{
+int adj_mat[50][50];
+int n, in_deg, out_deg, i,j;
+ printf("\n How many vertices ? ");
+ scanf("%d",&n);
+ read_graph(adj_mat,n);
+ printf("\n Vertices \t In_Degree \t Out_Degree \t Total Degree ");
+ for(i=1;i<=n;i++)
+    {
+        in_deg = out_deg =0;
+        for(j=1;j<=n;j++)
+            {
+                if(adj_mat[j][i]==1)
+                in_deg++;
+            }
+
+for(j=1;j<=n;j++)
+{
+    if(adj_mat[i][j]==1)
+            out_deg++;
+    printf("\n\n  %5d \t\t\t%d\t\t%d\t\t%d\n\n",i,in_deg,out_deg,in_deg+out_deg);
+}//for
+}
+}//main
+
+
+int undir_graph()
+    {
+        int adj_mat[50][50];
+        int deg,i,n,j;
+        printf("\n How many vertices ? :");
+        scanf("%d",&n);
+        read_graph(adj_mat,n);
+        printf("\n Vertex \t Degree ");
+        for(i=0;i<=n;i++)
+            {
+                deg=0;
+                for(j=1;j<=n;j++)
+                        if(adj_mat[i][j]==1)
+                        deg++;
+                printf("\n\n %5d \t\t %d \n\n",i,deg);
+
+            }//for
+
+    }
+
+int read_graph(int adj_mat[50][50],int n)
+    {
+        int i,j;
+        char reply;
+        for(i=1;i<=n;i++)
+        {
+        for(j=1;j<=n;j++)
+        {
+            if(i==j)
+                {
+                    adj_mat[i][j]=0;
+                    continue;
+                }
+            printf("Vertices %d & %d are Adjacent ? (Y/N): ",i,j);
+            fflush(stdin);
+            scanf("%c",&reply);
+            if(reply == 'y' || reply == 'Y')
+            adj_mat[i][j]=1;
+            else
+            adj_mat[i][j]=0;
+        }
+        }
+
+    }
 
